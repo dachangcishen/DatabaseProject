@@ -66,6 +66,16 @@ public class Database{
         stmt.close();
     }
 
+    public void deleteAllTables() throws SQLException{
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate("DROP TABLE IF EXISTS category;");
+        stmt.executeUpdate("DROP TABLE IF EXISTS manufacturer;");
+        stmt.executeUpdate("DROP TABLE IF EXISTS part;");
+        stmt.executeUpdate("DROP TABLE IF EXISTS salesperson;");
+        stmt.executeUpdate("DROP TABLE IF EXISTS transaction;");
+        stmt.close();
+    }
+
     private void readAndSaveToDB(String directoryPath){
         String[] files = {directoryPath + "category.txt", directoryPath + "manufacturer.txt", directoryPath + "part.txt", directoryPath + "salesperson.txt", directoryPath + "transaction.txt"};
         BufferedReader reader;
