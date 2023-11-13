@@ -10,7 +10,7 @@ public class Database{
     final String dbPassword = "CSCI3170";
     private Connection con = null;
 
-    public Connection connectToMySQL(){
+    public void connectToMySQL(){
         Connection con = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -22,7 +22,6 @@ public class Database{
             System.out.println(e);
         }
         this.con = con;
-        return con;
     }
     
     public void createAllTables() throws SQLException{
