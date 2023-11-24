@@ -111,7 +111,8 @@ WHERE student_id = ANY(SELECT sid FROM new_student);
 
 --Pass value to the subquery
 SELECT sname FROM student S
-WHERE EXISTS (SELECT * FROM new_student
+WHERE EXISTS (SELECT * 
+FROM new_student
 WHERE sid = S.student_id);
 
 --Pass value to the subquery
@@ -125,8 +126,10 @@ WHERE sid = S.student_id);
 --EXCEPT
 
 --Create a view
-CREATE VIEW temp AS SELECT * 
-FROM student WHERE study_year = 3;
+CREATE VIEW temp AS 
+SELECT * 
+FROM student 
+WHERE study_year = 3;
 
 --Drop a view
 DROP VIEW temp;
