@@ -1,14 +1,7 @@
 import java.sql.*;
 import java.util.*;
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 public class Salesperson {
-
-    private static SimpleDateFormat frominput;
-    private static SimpleDateFormat indatabase;
-
     public static void searchForParts(Connection con,String partOrManufacturerName, int searchMode, int sortMode) throws SQLException{
         // searchMode 1: partial search by part name
         // searchMode 2: partial search by manufacturer name
@@ -53,20 +46,13 @@ public class Salesperson {
             return;
         }
         else {
-            System.out.println("Product: "+pname+"(id: "+pid+") "+"Remaining Quantity: "+ (pavailablequantity-1));
+            System.out.println("Product: "+pname+"(id: "+pid+") "+"Remaining Quality: "+pavailablequantity);
         }
         stmt.executeUpdate("UPDATE part SET pavailablequantity = " + (pavailablequantity - 1) + " WHERE pid = " + pid + ";");
         // tid is auto-incremented
         rs = stmt.executeQuery("SELECT MAX(tid) FROM transaction");
         rs.next();
-        int tid = 1 + rs.getInt("MAX(tid)");
-        frominput = new SimpleDateFormat("dd/MM/yyyy");
-        indatabase = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            date = indatabase.format(frominput.parse(date));
-        }catch (ParseException e) {
-            e.printStackTrace();
-        }
+        int tid = 1 + rs.getInt("tid");
         stmt.executeUpdate("INSERT INTO transaction VALUES (" + tid + ", " + pid + ", " + sid + ", '" + date + "');");
 
         rs.close();
