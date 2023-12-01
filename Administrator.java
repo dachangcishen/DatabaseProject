@@ -48,7 +48,7 @@ public class Administrator {
         String str = "CREATE TABLE category( " +
             "cID INTEGER, " +
             "cName VARCHAR(25), " +
-            "PRIMARY KEY (cID), ";
+            "PRIMARY KEY (cID)); ";
         try{
             stmt.executeUpdate(str);
         }catch(Exception e){System.out.println("Table category exist.");}
@@ -58,7 +58,7 @@ public class Administrator {
             "mName VARCHAR(25), " +
             "mPhoneNumber INTEGER, " +
             "mAddress VARCHAR(100), " +
-            "PRIMARY KEY (mID),";
+            "PRIMARY KEY (mID));";
         try{
             stmt.executeUpdate(str);
         }catch(Exception e){System.out.println("Table manufacturer exist.");}
@@ -73,7 +73,7 @@ public class Administrator {
             "pAvailableQuantity INTEGER, " +
             "PRIMARY KEY (pID)," +
             "FOREIGN KEY (mID) REFERENCES manufacturer(mID)," +
-            "FOREIGN KEY (cID) REFERENCES category(cID)";
+            "FOREIGN KEY (cID) REFERENCES category(cID));";
         try{
             stmt.executeUpdate(str);
         }catch(Exception e){System.out.println("Table part exist.");}
@@ -84,7 +84,7 @@ public class Administrator {
             "sAddress VARCHAR(100), " +
             "sPhoneNumber INTEGER, " +
             "sExperience INTEGER, " +
-            "PRIMARY KEY (sID),";
+            "PRIMARY KEY (sID));";
         try{
             stmt.executeUpdate(str);
         }catch(Exception e){System.out.println("Table salesperson exist.");}
@@ -96,7 +96,7 @@ public class Administrator {
             "tDate DATE, " +
             "PRIMARY KEY (tID)," +
             "FOREIGN KEY (pID) REFERENCES part(pID)," +
-            "FOREIGN KEY (sID) REFERENCES salesperson(sID)";
+            "FOREIGN KEY (sID) REFERENCES salesperson(sID));";
         try{
             stmt.executeUpdate(str);
         }catch(Exception e){System.out.println("Table transaction exist.");}
