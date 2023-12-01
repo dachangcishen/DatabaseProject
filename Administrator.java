@@ -1,9 +1,21 @@
 import java.sql.*;
 import java.util.*;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 public class Administrator {
+    private static SimpleDateFormat frominput;
+    private static SimpleDateFormat indatabase;
+
+    // public Administrator(Connection con) throws SQLException {
+    //     frominput = new SimpleDateFormat("dd/MM/yyyy");
+    //     indatabase = new SimpleDateFormat("yyyy-MM-dd");
+    // }
+
 
     public static void createAllTables(Connection con) throws SQLException {
+        
         Statement stmt = con.createStatement();
                 String str = "CREATE TABLE category( " +
             "cID INTEGER, " +
@@ -16,8 +28,8 @@ public class Administrator {
         str = "CREATE TABLE manufacturer( " +
             "mID INTEGER, " +
             "mName VARCHAR(25), " +
-            "mPhoneNumber INTEGER, " +
             "mAddress VARCHAR(100), " +
+            "mPhoneNumber INTEGER, " +
             "PRIMARY KEY (mID))";
         try{
             stmt.executeUpdate(str);
@@ -52,7 +64,7 @@ public class Administrator {
             "pID INTEGER, " +
             "sID INTEGER, " +
             "tDate DATE, " +
-            "PRIMARY KEY (pID))";
+            "PRIMARY KEY (tID))";
         try{
             stmt.executeUpdate(str);
         }catch(Exception e){System.out.println("Table transaction exist.");}
@@ -127,6 +139,8 @@ public class Administrator {
                 line = reader.readLine();
             }
 
+            frominput = new SimpleDateFormat("dd/MM/yyyy");
+            indatabase = new SimpleDateFormat("yyyy-MM-dd");
             reader = new BufferedReader(new FileReader(files[4]));
             line = reader.readLine();
             while(line != null){
@@ -135,6 +149,11 @@ public class Administrator {
                 int pid = Integer.parseInt(splitted[1]);
                 int sid = Integer.parseInt(splitted[2]);
                 String tdate = splitted[3];
+                try {
+                    tdate = indatabase.format(frominput.parse(tdate));
+                }catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 stmt.executeUpdate("INSERT INTO transaction VALUES (" + tid + ", " + pid + ", " + sid + ", '" + tdate + "');");
                 line = reader.readLine();
             }
