@@ -2,7 +2,7 @@ import java.sql.*;
 import java.util.*;
 import java.io.*;
 public class Administrator {
-    public static void createAllTables(Connection con) throws SQLException{
+    public static void oldcreateAllTables(Connection con) throws SQLException{
         Statement stmt = con.createStatement();
         stmt.executeUpdate("CREATE TABLE category ("
                 + "cid INT NOT NULL,"
@@ -42,6 +42,67 @@ public class Administrator {
                 + "PRIMARY KEY (tid),"
                 + ");");
         stmt.close();
+    }
+    public static void createAllTables(Connection con) throws SQLException {
+        Statement stmt = con.createStatement();
+        String str = "CREATE TABLE category( " +
+            "cID INTEGER, " +
+            "cName VARCHAR(25), " +
+            "PRIMARY KEY (cID), ";
+        try{
+            stmt.executeUpdate(str);
+        }catch(Exception e){System.out.println("Table category exist.");}
+        
+        str = "CREATE TABLE manufacturer( " +
+            "mID INTEGER, " +
+            "mName VARCHAR(25), " +
+            "mPhoneNumber INTEGER, " +
+            "mAddress VARCHAR(100), " +
+            "PRIMARY KEY (mID),";
+        try{
+            stmt.executeUpdate(str);
+        }catch(Exception e){System.out.println("Table manufacturer exist.");}
+        
+        str = "CREATE TABLE part( " +
+            "pID INTEGER, " +
+            "pName VARCHAR(25), " +
+            "pPrice INTEGER, " +
+            "mID INTEGER, " +
+            "cID INTEGER, " +
+            "pWarrantyPeriod INTEGER, " +
+            "pAvailableQuantity INTEGER, " +
+            "PRIMARY KEY (pID)," +
+            "FOREIGN KEY (mID) REFERENCES manufacturer(mID)," +
+            "FOREIGN KEY (cID) REFERENCES category(cID)";
+        try{
+            stmt.executeUpdate(str);
+        }catch(Exception e){System.out.println("Table part exist.");}
+        
+        str = "CREATE TABLE salesperson( " +
+            "sID INTEGER, " +
+            "sName VARCHAR(25), " +
+            "sAddress VARCHAR(100), " +
+            "sPhoneNumber INTEGER, " +
+            "sExperience INTEGER, " +
+            "PRIMARY KEY (sID),";
+        try{
+            stmt.executeUpdate(str);
+        }catch(Exception e){System.out.println("Table salesperson exist.");}
+        
+        str = "CREATE TABLE transaction( " +
+            "tID INTEGER, " +
+            "pID INTEGER, " +
+            "sID INTEGER, " +
+            "tDate DATE, " +
+            "PRIMARY KEY (tID)," +
+            "FOREIGN KEY (pID) REFERENCES part(pID)," +
+            "FOREIGN KEY (sID) REFERENCES salesperson(sID)";
+        try{
+            stmt.executeUpdate(str);
+        }catch(Exception e){System.out.println("Table transaction exist.");}
+
+        stmt.close();
+        // System.out.println("Processing... Done. Database is initialized.");
     }
     public static void deleteAllTables(Connection con) throws SQLException{
         Statement stmt = con.createStatement();

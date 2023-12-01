@@ -97,6 +97,7 @@ public class CSCI3170Proj {
                 else if (choice1==3){
                     System.out.println();
                     System.out.print("Type in the Source Data Folder Path: ");
+                    sc.nextLine();
                     String path = sc.nextLine();
                     System.out.print("Processing...");
                     try {
