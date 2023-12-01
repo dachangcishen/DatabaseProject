@@ -44,6 +44,7 @@ public class CSCI3170Proj {
             }
             catch (Exception e){
                 System.out.println("Invalid input");
+                sc.nextLine();
                 continue;
             }
             if (choice==4){
@@ -68,6 +69,7 @@ public class CSCI3170Proj {
                 }
                 catch (Exception e){
                     System.out.println("Invalid input");
+                    sc.nextLine();
                     continue;
                 }
                 if(choice1==5)
@@ -111,6 +113,7 @@ public class CSCI3170Proj {
                 }
                 else if (choice1==4){
                     System.out.print("Which table would you like to show: ");
+                    sc.nextLine();
                     String tablename = sc.nextLine();
                     System.out.println("Content of table "+tablename+":");
                     try {
@@ -141,6 +144,7 @@ public class CSCI3170Proj {
                     }
                     catch (Exception e){
                         System.out.println("Invalid input");
+                        sc.nextLine();
                         continue;
                     }
                     if(choice2==3){
@@ -160,6 +164,7 @@ public class CSCI3170Proj {
                         }
                         catch (Exception e){
                             System.out.println("Invalid input");
+                            sc.nextLine();
                             continue;
                         }
                         if(choice21>2||choice21<1){
@@ -167,6 +172,7 @@ public class CSCI3170Proj {
                             continue;
                         }
                         System.out.print("Type in the search keyword: ");
+                        sc.nextLine();
                         String keyword =sc.nextLine();
                         System.out.println("Choose ordering:");
                         System.out.println("1. By price, ascending order");
@@ -178,10 +184,12 @@ public class CSCI3170Proj {
                         }
                         catch (Exception e){
                             System.out.println("Invalid input");
+                            sc.nextLine();
                             continue;
                         }
                         if(choice22>2||choice22<1){
                                 System.out.println("Invalid input");
+                                sc.nextLine();
                                 continue;
                             }
                         try {
@@ -202,6 +210,7 @@ public class CSCI3170Proj {
                         }
                         catch (Exception e){
                             System.out.println("Invalid input");
+                            sc.nextLine();
                             continue;
                         }
                         System.out.print("Enter the Salesperson ID: ");
@@ -211,6 +220,7 @@ public class CSCI3170Proj {
                         }
                         catch (Exception e){
                             System.out.println("Invalid input");
+                            sc.nextLine();
                             continue;
                         }
                         String pattern = "dd/MM/yyyy";
@@ -219,7 +229,7 @@ public class CSCI3170Proj {
                             Salesperson.sellAPart(mySQLDB,PartID,SalespersonID,Date);
                         } catch (Exception e) {
                             System.out.println("Error: fail to sell the part.");
-                            continue;
+                            break;
                         }
                         break;
                     }}
@@ -251,6 +261,7 @@ public class CSCI3170Proj {
                     }
                     catch (Exception e){
                         System.out.println("Invalid input");
+                        sc.nextLine();
                         continue;
                     }
                     if (choice3==5){
@@ -269,10 +280,12 @@ public class CSCI3170Proj {
                         }
                         catch (Exception e){
                             System.out.println("Invalid input");
+                            sc.nextLine();
                             continue;
                         }
                         if(choice31<1||choice31>2){
                             System.out.println("Invalid input");
+                            sc.nextLine();
                             continue;}
                         try {
                             Manager.listAllSalespersons(mySQLDB,choice31);
@@ -291,6 +304,7 @@ public class CSCI3170Proj {
                           }
                           catch(Exception e){
                               System.out.println("Invalid input");
+                              sc.nextLine();
                               continue;
                           }
                           int upperbound=-1;
@@ -299,10 +313,12 @@ public class CSCI3170Proj {
                           }
                           catch(Exception e){
                               System.out.println("Invalid input");
+                              sc.nextLine();
                               continue;
                           }
                           if(lowerbound<0||upperbound<0||lowerbound>upperbound){
                               System.out.println("Invalid input");
+                              sc.nextLine();
                               continue;
                           }
                           try{
@@ -337,10 +353,12 @@ public class CSCI3170Proj {
                             }
                             catch(Exception e){
                                 System.out.println("Invalid input");
+                                sc.nextLine();
                                 continue;
                             }
                             if(Num<0){
                                 System.out.println("Invalid input");
+                                sc.nextLine();
                                 continue;
                             }
                             try{
