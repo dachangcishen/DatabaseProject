@@ -1,47 +1,76 @@
 import java.sql.*;
 import java.util.*;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 public class Administrator {
-    public static void createAllTables(Connection con) throws SQLException{
+    private static SimpleDateFormat frominput;
+    private static SimpleDateFormat indatabase;
+
+    // public Administrator(Connection con) throws SQLException {
+    //     frominput = new SimpleDateFormat("dd/MM/yyyy");
+    //     indatabase = new SimpleDateFormat("yyyy-MM-dd");
+    // }
+
+
+    public static void createAllTables(Connection con) throws SQLException {
+        
         Statement stmt = con.createStatement();
-        stmt.executeUpdate("CREATE TABLE category ("
-                + "cid INT NOT NULL,"
-                + "cname VARCHAR(20) NOT NULL,"
-                + "PRIMARY KEY (cid)"
-                + ");");
-        stmt.executeUpdate("CREATE TABLE manufacturer ("
-                + "mid INT NOT NULL,"
-                + "mname VARCHAR(20) NOT NULL,"
-                + "maddress VARCHAR(50) NOT NULL,"
-                + "mphonenumber INT NOT NULL,"
-                + "PRIMARY KEY (mid)"
-                + ");");
-        stmt.executeUpdate("CREATE TABLE part ("
-                + "pid INT NOT NULL,"
-                + "pname VARCHAR(20) NOT NULL,"
-                + "pprice INT NOT NULL,"
-                + "mid INT NOT NULL,"
-                + "cid INT NOT NULL,"
-                + "pwarranty INT NOT NULL,"
-                + "pavailablequantity INT NOT NULL,"
-                + "PRIMARY KEY (pid),"
-                + ");");
-        stmt.executeUpdate("CREATE TABLE salesperson ("
-                + "sid INT NOT NULL,"
-                + "sname VARCHAR(20) NOT NULL,"
-                + "saddress VARCHAR(50) NOT NULL,"
-                + "sphonenumber INT NOT NULL,"
-                + "sexperience INT NOT NULL,"
-                + "PRIMARY KEY (sid)"
-                + ");");
-        stmt.executeUpdate("CREATE TABLE transaction ("
-                + "tid INT NOT NULL,"
-                + "pid INT NOT NULL,"
-                + "sid INT NOT NULL,"
-                + "tdate DATE NOT NULL,"
-                + "PRIMARY KEY (tid),"
-                + ");");
+                String str = "CREATE TABLE category( " +
+            "cID INTEGER, " +
+            "cName VARCHAR(25), " +
+            "PRIMARY KEY (cID))";
+        try{
+            stmt.executeUpdate(str);
+        }catch(Exception e){System.out.println("Table category exist.");}
+        
+        str = "CREATE TABLE manufacturer( " +
+            "mID INTEGER, " +
+            "mName VARCHAR(25), " +
+            "mAddress VARCHAR(100), " +
+            "mPhoneNumber INTEGER, " +
+            "PRIMARY KEY (mID))";
+        try{
+            stmt.executeUpdate(str);
+        }catch(Exception e){System.out.println("Table manufacturer exist.");}
+        
+        str = "CREATE TABLE part( " +
+            "pID INTEGER, " +
+            "pName VARCHAR(25), " +
+            "pPrice INTEGER, " +
+            "mID INTEGER, " +
+            "cID INTEGER, " +
+            "pWarrantyPeriod INTEGER, " +
+            "pAvailableQuantity INTEGER, " +
+            "PRIMARY KEY (pID))";
+        try{
+            stmt.executeUpdate(str);
+        }catch(Exception e){System.out.println("Table part exist.");}
+        
+        str = "CREATE TABLE salesperson( " +
+            "sID INTEGER, " +
+            "sName VARCHAR(25), " +
+            "sAddress VARCHAR(100), " +
+            "sPhoneNumber INTEGER, " +
+            "sExperience INTEGER, " +
+            "PRIMARY KEY (sID))";
+        try{
+            stmt.executeUpdate(str);
+        }catch(Exception e){System.out.println("Table salesperson exist.");}
+        
+        str = "CREATE TABLE transaction( " +
+            "tID INTEGER, " +
+            "pID INTEGER, " +
+            "sID INTEGER, " +
+            "tDate DATE, " +
+            "PRIMARY KEY (tID))";
+        try{
+            stmt.executeUpdate(str);
+        }catch(Exception e){System.out.println("Table transaction exist.");}
+
         stmt.close();
+        // System.out.println("Processing... Done. Database is initialized.");
     }
     public static void deleteAllTables(Connection con) throws SQLException{
         Statement stmt = con.createStatement();
@@ -110,6 +139,8 @@ public class Administrator {
                 line = reader.readLine();
             }
 
+            frominput = new SimpleDateFormat("dd/MM/yyyy");
+            indatabase = new SimpleDateFormat("yyyy-MM-dd");
             reader = new BufferedReader(new FileReader(files[4]));
             line = reader.readLine();
             while(line != null){
@@ -118,6 +149,11 @@ public class Administrator {
                 int pid = Integer.parseInt(splitted[1]);
                 int sid = Integer.parseInt(splitted[2]);
                 String tdate = splitted[3];
+                try {
+                    tdate = indatabase.format(frominput.parse(tdate));
+                }catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 stmt.executeUpdate("INSERT INTO transaction VALUES (" + tid + ", " + pid + ", " + sid + ", '" + tdate + "');");
                 line = reader.readLine();
             }

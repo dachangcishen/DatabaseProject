@@ -34,7 +34,7 @@ public class Manager {
         // lowerLimit and higherlimit are for the range of sexperience (inclusive)
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT sid, sname, sexperience, COUNT(*) AS transactionnumber FROM salesperson, transaction WHERE salesperson.sid = transaction.sid GROUP BY salesperson.sid HAVING sexperience >= " + lowerLimit + " AND sexperience <= " + higherlimit + ";");
+            ResultSet rs = stmt.executeQuery("SELECT salesperson.sID, sName, sExperience, COUNT(*) AS transactionnumber FROM salesperson, transaction WHERE salesperson.sid = transaction.sid GROUP BY salesperson.sid HAVING sexperience >= " + lowerLimit + " AND sexperience <= " + higherlimit + ";");
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnCount = rsmd.getColumnCount();
             for(int i = 1; i <= columnCount; i++){
@@ -55,13 +55,13 @@ public class Manager {
     }
     public static void listManufacturersWithTotalSalesValue(Connection con) throws SQLException{
         Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT mid, mname, SUM(pprice) AS totalsalesvalue FROM manufacturer, part, transaction WHERE manufacturer.mid = part.mid AND part.pid = transaction.pid GROUP BY manufacturer.mid ORDER BY totalsalesvalue DESC;");
+        ResultSet rs = stmt.executeQuery("SELECT manufacturer.mID, mName, SUM(pPrice) AS totalSalesValue FROM manufacturer, part, transaction WHERE manufacturer.mid = part.mid AND part.pid = transaction.pid GROUP BY manufacturer.mid ORDER BY totalsalesvalue DESC;");
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnCount = rsmd.getColumnCount();
         for(int i = 1; i <= columnCount; i++){
             System.out.print(rsmd.getColumnName(i) + " | ");
         }
-        System.out.println();
+        System.out.println("");
         while(rs.next()){
             for(int i = 1; i <= columnCount; i++){
                 System.out.print(rs.getString(i) + " | ");
@@ -73,7 +73,7 @@ public class Manager {
     }
     public  static void showNMostPopularParts(Connection con,int n) throws SQLException{
         Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT pid, pname, COUNT(*) AS popularity FROM part, transaction WHERE part.pid = transaction.pid GROUP BY part.pid ORDER BY popularity DESC LIMIT " + n + ";");
+        ResultSet rs = stmt.executeQuery("SELECT part.pID, pName, COUNT(*) AS popularity FROM part, transaction WHERE part.pid = transaction.pid GROUP BY part.pid ORDER BY popularity DESC LIMIT " + n + ";");
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnCount = rsmd.getColumnCount();
         for(int i = 1; i <= columnCount; i++){
